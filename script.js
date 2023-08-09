@@ -1,15 +1,16 @@
 //basic calculation functions
-function add(num1, num2) {
-  return Number(num1) + Number(num2);
+function add(operand1, operand2) {
+  console.log(operand1);
+  return Number(operand1) + Number(operand2);
 }
-function subtract(num1, num2) {
-  return Number(num1) - Number(num2);
+function subtract(operand1, num2) {
+  return Number(num1) - Number(operand2);
 }
-function multiply(num1, num2) {
-  return Number(num1) * Number(num2);
+function multiply(operand1, num2) {
+  return Number(num1) * Number(operand2);
 }
-function divide(num1, num2) {
-  return Number(num1) / Number(num2);
+function divide(operand1, num2) {
+  return Number(num1) / Number(operand2);
 }
 
 //initialize parts of operation
@@ -47,7 +48,12 @@ buttonsArray.forEach(function (button) {
         button.textContent === "8" ||
         button.textContent === "9"
       ) {
-        firstNumber = button.textContent;
+        //allow it to be more than one digit
+        if (!firstNumber) {
+          firstNumber = button.textContent;
+        } else {
+          firstNumber += button.textContent;
+        }
         //add it to display
         display.textContent += firstNumber;
         return;
