@@ -2,6 +2,7 @@
 let firstNumber;
 let operator;
 let secondNumber;
+let lastModifiedVar;
 
 //get the textContent from click event
 const buttonsArray = document.querySelectorAll("button");
@@ -15,8 +16,26 @@ buttonsArray.forEach(function (button) {
       firstNumber = "";
       operator = "";
       secondNumber = "";
+      lastModifiedVar = "";
       display.textContent = "";
       return;
+    }
+
+    //clicking 'delete' removes the most recent number entered (str.substring(0, str.length-1))
+    if (button.textContent === "Delete") {
+      display.textContent = display.textContent.substring(
+        0,
+        display.textContent.length - 1
+      );
+      //the most recently modified variable needs to be reset
+      if (lastModifiedVar === firstNumber) {
+        firstNumber = "";
+      } else if (lastModifiedVar === operator) {
+        operator = "";
+      } else if (lastModifiedVar === secondNumber) {
+        secondNumber = "";
+      }
+      lastModifiedVar = "";
     }
 
     //do the operation when equals sign is clicked, but ONLY if both operands and operator have been entered already
@@ -51,6 +70,8 @@ buttonsArray.forEach(function (button) {
         }
         //add it to display
         display.textContent += firstNumber;
+        //save as last modified so it can be deleted
+        lastModifiedVar = firstNumber;
         return;
       }
     }
@@ -58,13 +79,15 @@ buttonsArray.forEach(function (button) {
     //if it's an operator, save it as operator
     if (
       button.textContent === "+" ||
-      button.textContent === "-" ||
-      button.textContent === "*" ||
-      button.textContent === "/"
+      button.textContent === "−" ||
+      button.textContent === "×" ||
+      button.textContent === "÷"
     ) {
       operator = button.textContent;
       //add operator to display
       display.textContent += operator;
+      //save as last modified so it can be deleted
+      lastModifiedVar = operator;
       return;
     }
     //if the display already contains an operator, clicked button's textContent saved as secondNumber
@@ -73,6 +96,8 @@ buttonsArray.forEach(function (button) {
       secondNumber = button.textContent;
       //add secondNumber to display
       display.textContent += secondNumber;
+      //save as last modified so it can be deleted
+      lastModifiedVar = secondNumber;
       return;
     }
   });
@@ -85,16 +110,14 @@ buttonsArray.forEach(function (button) {
 function operate(firstNumber, operator, secondNumber) {
   if (operator === "+") {
     return add(firstNumber, secondNumber);
-  } else if (operator === "-") {
+  } else if (operator === "−") {
     return subtract(firstNumber, secondNumber);
-  } else if (operator === "*") {
+  } else if (operator === "×") {
     return multiply(firstNumber, secondNumber);
-  } else if (operator === "/") {
+  } else if (operator === "÷") {
     return divide(firstNumber, secondNumber);
   }
 }
-
-//clicking 'delete' removes the most recent number entered (pop from array?)
 
 //allow user to input floating point (decimal) numbers
 //don't let user input more than one decimal in a number like 11.9.39.6
