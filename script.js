@@ -1,18 +1,3 @@
-//basic calculation functions
-function add(operand1, operand2) {
-  console.log(operand1);
-  return Number(operand1) + Number(operand2);
-}
-function subtract(operand1, num2) {
-  return Number(num1) - Number(operand2);
-}
-function multiply(operand1, num2) {
-  return Number(num1) * Number(operand2);
-}
-function divide(operand1, num2) {
-  return Number(num1) / Number(operand2);
-}
-
 //initialize parts of operation
 let firstNumber;
 let operator;
@@ -25,6 +10,15 @@ display.textContent = "";
 
 buttonsArray.forEach(function (button) {
   button.addEventListener("click", (e) => {
+    //clicking 'clear' clears the display and resets all variable values
+    if (button.textContent === "Clear") {
+      firstNumber = "";
+      operator = "";
+      secondNumber = "";
+      display.textContent = "";
+      return;
+    }
+
     //do the operation when equals sign is clicked, but ONLY if both operands and operator have been entered already
     if (button.textContent === "=") {
       //remove operation from display
@@ -100,11 +94,23 @@ function operate(firstNumber, operator, secondNumber) {
   }
 }
 
-//clicking 'clear' clears the display and resets all variable values
-
 //clicking 'delete' removes the most recent number entered (pop from array?)
 
 //allow user to input floating point (decimal) numbers
 //don't let user input more than one decimal in a number like 11.9.39.6
 
 //Add keyboard support! You might run into an issue where keys such as (/) might cause you some trouble
+
+//basic calculation functions
+function add(operand1, operand2) {
+  return Number(operand1) + Number(operand2);
+}
+function subtract(operand1, operand2) {
+  return Number(operand1) - Number(operand2);
+}
+function multiply(operand1, operand2) {
+  return Number(operand1) * Number(operand2);
+}
+function divide(operand1, operand2) {
+  return Number(operand1) / Number(operand2);
+}
