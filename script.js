@@ -25,16 +25,17 @@ display.textContent = "";
 
 buttonsArray.forEach(function (button) {
   button.addEventListener("click", (e) => {
-    //do the operation when equals sign is clicked
+    //do the operation when equals sign is clicked, but ONLY if both operands and operator have been entered already
     if (button.textContent === "=") {
       //remove operation from display
       display.textContent = "";
-      //display result only
+      //display result only (need to round long decimal numbers)
       display.textContent = operate(firstNumber, operator, secondNumber);
       return;
     }
     //store clicked button's textContent in variable
     //if it's a number, save it as firstNumber
+    //also, once a result is calculated, it becomes the firstNumber to allow for processes like 1 + 13 * 2 = 28 (doesn't follow order of operations)
     if (!display.textContent.includes(operator)) {
       if (
         button.textContent === "0" ||
@@ -73,6 +74,7 @@ buttonsArray.forEach(function (button) {
       return;
     }
     //if the display already contains an operator, clicked button's textContent saved as secondNumber
+    //if the secondNumber is 0 and the operator is '/', display an error (dividing by zero will crash it (why?))
     if (display.textContent.includes(operator)) {
       secondNumber = button.textContent;
       //add secondNumber to display
@@ -97,3 +99,12 @@ function operate(firstNumber, operator, secondNumber) {
     return divide(firstNumber, secondNumber);
   }
 }
+
+//clicking 'clear' clears the display and resets all variable values
+
+//clicking 'delete' removes the most recent number entered (pop from array?)
+
+//allow user to input floating point (decimal) numbers
+//don't let user input more than one decimal in a number like 11.9.39.6
+
+//Add keyboard support! You might run into an issue where keys such as (/) might cause you some trouble
