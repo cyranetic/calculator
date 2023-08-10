@@ -1,116 +1,3 @@
-// let firstNumber = null;
-// let operator = null;
-// let secondNumber = null;
-// let lastModifiedVar = null;
-// let result = null;
-
-// const buttonsArray = document.querySelectorAll("button");
-// let display = document.querySelector(".display");
-// display.textContent = "";
-
-// operate();
-
-// //chooses and executes correct operation
-// function operate(firstNumber, operator, secondNumber) {
-//   buttonsArray.forEach(function (button) {
-//     button.addEventListener("click", (e) => {
-//       let equalsClicked = false;
-//       if (result === null) {
-//         if (e.target.textContent === "clear") {
-//           clear();
-//           return;
-//         }
-
-//         if (e.target.textContent === "backspace") {
-//           backspace();
-//           return;
-//         }
-
-//         if (e.target.textContent === "=") {
-//           equalsClicked = true;
-//           if (operator === "+") {
-//             result = add(firstNumber, secondNumber);
-//             firstNumber = result;
-//             return result;
-//           } else if (operator === "−") {
-//             result = subtract(firstNumber, secondNumber);
-//             firstNumber = result;
-//             return result;
-//           } else if (operator === "×") {
-//             result = multiply(firstNumber, secondNumber);
-//             firstNumber = result;
-//             return result;
-//           } else if (operator === "÷") {
-//             result = divide(firstNumber, secondNumber);
-//             firstNumber = result;
-//             return result;
-//           }
-//         }
-//         while (operator === null) {
-//           if (
-//             button.textContent === "0" ||
-//             button.textContent === "1" ||
-//             button.textContent === "2" ||
-//             button.textContent === "3" ||
-//             button.textContent === "4" ||
-//             button.textContent === "5" ||
-//             button.textContent === "6" ||
-//             button.textContent === "7" ||
-//             button.textContent === "8" ||
-//             button.textContent === "9"
-//           ) {
-//             if (firstNumber === null) {
-//               firstNumber = button.textContent;
-//               display.textContent += button.textContent;
-//             } else if (equalsClicked === false) {
-//               firstNumber += button.textContent;
-//               display.textContent += button.textContent;
-//             }
-//             lastModifiedVar = firstNumber;
-//           } else if (
-//             button.textContent === "+" ||
-//             button.textContent === "−" ||
-//             button.textContent === "×" ||
-//             button.textContent === "÷"
-//           ) {
-//             operator = button.textContent;
-//             //add operator to display
-//             display.textContent += operator;
-//             //save as last modified so it can be deleted
-//             lastModifiedVar = operator;
-//           }
-//         }
-//         if (secondNumber === null) {
-//           secondNumber = button.textContent;
-//           display.textContent += button.textContent;
-//         } else if (secondNumber !== null) {
-//           secondNumber += button.textContent;
-//           display.textContent += button.textContent;
-//         }
-//         lastModifiedVar = secondNumber;
-//       }
-//     });
-//   });
-// }
-
-// //basic calculation functions
-// function add(operand1, operand2) {
-//   return Number(operand1) + Number(operand2);
-// }
-// function subtract(operand1, operand2) {
-//   return Number(operand1) - Number(operand2);
-// }
-// function multiply(operand1, operand2) {
-//   return Number(operand1) * Number(operand2);
-// }
-// function divide(operand1, operand2) {
-//   if (operand1 === 0 || operand2 === 0) {
-//     return "Really?";
-//   } else {
-//     return Number(operand1) / Number(operand2);
-//   }
-// }
-
 // //backspace function
 // function backspace() {
 //   //display string gets rid of last character
@@ -149,9 +36,116 @@ let num1 = null;
 let operator = null;
 let num2 = null;
 let result = null;
+let equalsClicked = false;
 
 let display = document.querySelector(".display");
-let button = document.querySelectorAll("button").forEach(function (button) {
-  console.log(button);
-  return button;
-});
+display.textContent = "";
+let buttonsArray = document.querySelectorAll("button");
+
+function getNum1() {
+  buttonsArray.forEach(function (button) {
+    button.addEventListener("click", (e) => {
+      if (e.target.className === "number" && operator === null) {
+        if (num1 === null) {
+          num1 = e.target.textContent;
+          display.textContent += num1;
+          return num1;
+        } else if (num1 !== null) {
+          num1 += e.target.textContent;
+          display.textContent += e.target.textContent;
+          return num1;
+        }
+      }
+    });
+  });
+}
+num1 = getNum1();
+console.log(num1);
+
+function getOperator() {
+  buttonsArray.forEach(function (button) {
+    button.addEventListener("click", (e) => {
+      if (e.target.className === "operator") {
+        if (num1 === null) {
+          return;
+        } else if (operator !== null) {
+          return;
+        } else if (num1 !== null) {
+          operator = e.target.textContent;
+          display.textContent += operator;
+          return operator;
+        }
+      }
+    });
+  });
+}
+
+function getNum2() {
+  buttonsArray.forEach(function (button) {
+    button.addEventListener("click", (e) => {
+      if (e.target.className === "number" && operator !== null) {
+        if (num2 === null) {
+          num2 = e.target.textContent;
+          display.textContent += e.target.textContent;
+          return num2;
+        } else if (num2 !== null) {
+          num2 += e.target.textContent;
+          display.textContent += e.target.textContent;
+          return num2;
+        }
+      }
+    });
+  });
+}
+
+// function operate() {
+//   //calculate the expression
+//   buttonsArray.forEach(function (button) {
+//     button.addEventListener("click", (e) => {
+//       if (e.target.textContent === "=") {
+//         if (operator() === "+") {
+//           result = add(num1(), num2());
+//           display.textContent = result;
+//           num1 = result;
+//           console.log(result);
+//           return result;
+//         } else if (operator() === "−") {
+//           result = subtract(num1(), num2());
+//           display.textContent = result;
+//           num1 = result;
+//           return result;
+//         } else if (operator() === "×") {
+//           result = multiply(num1(), num2());
+//           display.textContent = result;
+//           num1 = result;
+//           return result;
+//         } else if (operator() === "÷") {
+//           result = divide(num1(), num2());
+//           display.textContent = result;
+//           num1 = result;
+//           return result;
+//         }
+//       }
+//     });
+//   });
+// }
+
+// //math
+// function add(number1, number2) {
+//   return Number(number1) + Number(number2);
+// }
+// function subtract(number1, number2) {
+//   return Number(number1) - Number(number2);
+// }
+// function multiply(number1, number2) {
+//   return Number(number1) * Number(number2);
+// }
+// function divide(number1, number2) {
+//   if (number1 === 0 || number2 === 0) {
+//     return "Nope";
+//   } else {
+//     return Number(number1) / Number(number2);
+//   }
+// }
+
+// operate();
