@@ -1,139 +1,157 @@
-//initialize parts of operation
-let firstNumber;
-let operator;
-let secondNumber;
-let lastModifiedVar;
+// let firstNumber = null;
+// let operator = null;
+// let secondNumber = null;
+// let lastModifiedVar = null;
+// let result = null;
 
-//get the textContent from click event
-const buttonsArray = document.querySelectorAll("button");
+// const buttonsArray = document.querySelectorAll("button");
+// let display = document.querySelector(".display");
+// display.textContent = "";
+
+// operate();
+
+// //chooses and executes correct operation
+// function operate(firstNumber, operator, secondNumber) {
+//   buttonsArray.forEach(function (button) {
+//     button.addEventListener("click", (e) => {
+//       let equalsClicked = false;
+//       if (result === null) {
+//         if (e.target.textContent === "clear") {
+//           clear();
+//           return;
+//         }
+
+//         if (e.target.textContent === "backspace") {
+//           backspace();
+//           return;
+//         }
+
+//         if (e.target.textContent === "=") {
+//           equalsClicked = true;
+//           if (operator === "+") {
+//             result = add(firstNumber, secondNumber);
+//             firstNumber = result;
+//             return result;
+//           } else if (operator === "−") {
+//             result = subtract(firstNumber, secondNumber);
+//             firstNumber = result;
+//             return result;
+//           } else if (operator === "×") {
+//             result = multiply(firstNumber, secondNumber);
+//             firstNumber = result;
+//             return result;
+//           } else if (operator === "÷") {
+//             result = divide(firstNumber, secondNumber);
+//             firstNumber = result;
+//             return result;
+//           }
+//         }
+//         while (operator === null) {
+//           if (
+//             button.textContent === "0" ||
+//             button.textContent === "1" ||
+//             button.textContent === "2" ||
+//             button.textContent === "3" ||
+//             button.textContent === "4" ||
+//             button.textContent === "5" ||
+//             button.textContent === "6" ||
+//             button.textContent === "7" ||
+//             button.textContent === "8" ||
+//             button.textContent === "9"
+//           ) {
+//             if (firstNumber === null) {
+//               firstNumber = button.textContent;
+//               display.textContent += button.textContent;
+//             } else if (equalsClicked === false) {
+//               firstNumber += button.textContent;
+//               display.textContent += button.textContent;
+//             }
+//             lastModifiedVar = firstNumber;
+//           } else if (
+//             button.textContent === "+" ||
+//             button.textContent === "−" ||
+//             button.textContent === "×" ||
+//             button.textContent === "÷"
+//           ) {
+//             operator = button.textContent;
+//             //add operator to display
+//             display.textContent += operator;
+//             //save as last modified so it can be deleted
+//             lastModifiedVar = operator;
+//           }
+//         }
+//         if (secondNumber === null) {
+//           secondNumber = button.textContent;
+//           display.textContent += button.textContent;
+//         } else if (secondNumber !== null) {
+//           secondNumber += button.textContent;
+//           display.textContent += button.textContent;
+//         }
+//         lastModifiedVar = secondNumber;
+//       }
+//     });
+//   });
+// }
+
+// //basic calculation functions
+// function add(operand1, operand2) {
+//   return Number(operand1) + Number(operand2);
+// }
+// function subtract(operand1, operand2) {
+//   return Number(operand1) - Number(operand2);
+// }
+// function multiply(operand1, operand2) {
+//   return Number(operand1) * Number(operand2);
+// }
+// function divide(operand1, operand2) {
+//   if (operand1 === 0 || operand2 === 0) {
+//     return "Really?";
+//   } else {
+//     return Number(operand1) / Number(operand2);
+//   }
+// }
+
+// //backspace function
+// function backspace() {
+//   //display string gets rid of last character
+//   display.textContent = display.textContent.substring(
+//     0,
+//     display.textContent.length - 1
+//   );
+//   //the most recently modified variable needs to be reset
+//   if (lastModifiedVar === firstNumber) {
+//     firstNumber = null;
+//   } else if (lastModifiedVar === operator) {
+//     operator = null;
+//   } else if (lastModifiedVar === secondNumber) {
+//     secondNumber = null;
+//   }
+//   lastModifiedVar = null;
+// }
+
+// //clear function
+// function clear() {
+//   //clicking 'clear' clears the display and resets all variable values
+//   firstNumber = null;
+//   operator = null;
+//   secondNumber = null;
+//   lastModifiedVar = null;
+//   display.textContent = "";
+//   return;
+// }
+
+// //allow user to input floating point (decimal) numbers
+// //don't let user input more than one decimal in a number like 11.9.39.6
+
+// //Add keyboard support! You might run into an issue where keys such as (/) might cause you some trouble
+
+let num1 = null;
+let operator = null;
+let num2 = null;
+let result = null;
+
 let display = document.querySelector(".display");
-display.textContent = "";
-
-buttonsArray.forEach(function (button) {
-  button.addEventListener("click", (e) => {
-    //clicking 'clear' clears the display and resets all variable values
-    if (button.textContent === "Clear") {
-      firstNumber = "";
-      operator = "";
-      secondNumber = "";
-      lastModifiedVar = "";
-      display.textContent = "";
-      return;
-    }
-
-    //clicking 'delete' removes the most recent number entered (str.substring(0, str.length-1))
-    if (button.textContent === "Delete") {
-      display.textContent = display.textContent.substring(
-        0,
-        display.textContent.length - 1
-      );
-      //the most recently modified variable needs to be reset
-      if (lastModifiedVar === firstNumber) {
-        firstNumber = "";
-      } else if (lastModifiedVar === operator) {
-        operator = "";
-      } else if (lastModifiedVar === secondNumber) {
-        secondNumber = "";
-      }
-      lastModifiedVar = "";
-    }
-
-    //do the operation when equals sign is clicked, but ONLY if both operands and operator have been entered already
-    if (button.textContent === "=") {
-      //remove operation from display
-      display.textContent = "";
-      //display result only (need to round long decimal numbers)
-      display.textContent = operate(firstNumber, operator, secondNumber);
-      return;
-    }
-    //store clicked button's textContent in variable
-    //if it's a number, save it as firstNumber
-    //also, once a result is calculated, it becomes the firstNumber to allow for processes like 1 + 13 * 2 = 28 (doesn't follow order of operations)
-    if (!display.textContent.includes(operator)) {
-      if (
-        button.textContent === "0" ||
-        button.textContent === "1" ||
-        button.textContent === "2" ||
-        button.textContent === "3" ||
-        button.textContent === "4" ||
-        button.textContent === "5" ||
-        button.textContent === "6" ||
-        button.textContent === "7" ||
-        button.textContent === "8" ||
-        button.textContent === "9"
-      ) {
-        //allow it to be more than one digit
-        if (!firstNumber) {
-          firstNumber = button.textContent;
-        } else {
-          firstNumber += button.textContent;
-        }
-        //add it to display
-        display.textContent += firstNumber;
-        //save as last modified so it can be deleted
-        lastModifiedVar = firstNumber;
-        return;
-      }
-    }
-
-    //if it's an operator, save it as operator
-    if (
-      button.textContent === "+" ||
-      button.textContent === "−" ||
-      button.textContent === "×" ||
-      button.textContent === "÷"
-    ) {
-      operator = button.textContent;
-      //add operator to display
-      display.textContent += operator;
-      //save as last modified so it can be deleted
-      lastModifiedVar = operator;
-      return;
-    }
-    //if the display already contains an operator, clicked button's textContent saved as secondNumber
-    //if the secondNumber is 0 and the operator is '/', display an error (dividing by zero will crash it (why?))
-    if (display.textContent.includes(operator)) {
-      secondNumber = button.textContent;
-      //add secondNumber to display
-      display.textContent += secondNumber;
-      //save as last modified so it can be deleted
-      lastModifiedVar = secondNumber;
-      return;
-    }
-  });
+let button = document.querySelectorAll("button").forEach(function (button) {
+  console.log(button);
+  return button;
 });
-
-//values (shown in a string) need to show in display as soon as they're clicked
-//when equals sign is clicked, string on display is removed and result is displayed
-
-//chooses and executes correct operation
-function operate(firstNumber, operator, secondNumber) {
-  if (operator === "+") {
-    return add(firstNumber, secondNumber);
-  } else if (operator === "−") {
-    return subtract(firstNumber, secondNumber);
-  } else if (operator === "×") {
-    return multiply(firstNumber, secondNumber);
-  } else if (operator === "÷") {
-    return divide(firstNumber, secondNumber);
-  }
-}
-
-//allow user to input floating point (decimal) numbers
-//don't let user input more than one decimal in a number like 11.9.39.6
-
-//Add keyboard support! You might run into an issue where keys such as (/) might cause you some trouble
-
-//basic calculation functions
-function add(operand1, operand2) {
-  return Number(operand1) + Number(operand2);
-}
-function subtract(operand1, operand2) {
-  return Number(operand1) - Number(operand2);
-}
-function multiply(operand1, operand2) {
-  return Number(operand1) * Number(operand2);
-}
-function divide(operand1, operand2) {
-  return Number(operand1) / Number(operand2);
-}
