@@ -16,17 +16,6 @@
 //   lastModifiedVar = null;
 // }
 
-// //clear function
-// function clear() {
-//   //clicking 'clear' clears the display and resets all variable values
-//   firstNumber = null;
-//   operator = null;
-//   secondNumber = null;
-//   lastModifiedVar = null;
-//   display.textContent = "";
-//   return;
-// }
-
 // //allow user to input floating point (decimal) numbers
 // //don't let user input more than one decimal in a number like 11.9.39.6
 
@@ -126,6 +115,14 @@ function operate() {
 
 operate();
 
+buttonsArray.forEach(function (button) {
+  button.addEventListener("click", (e) => {
+    if (e.target.textContent === "clear") {
+      clear();
+    }
+  });
+});
+
 //math
 function add(number1, number2) {
   return Number(number1) + Number(number2);
@@ -142,4 +139,14 @@ function divide(number1, number2) {
   } else {
     return Number(number1) / Number(number2);
   }
+}
+
+//clear function
+function clear() {
+  //clicking 'clear' clears the display and resets all variable values
+  num1 = null;
+  operator = null;
+  num2 = null;
+  lastModifiedVar = null;
+  display.textContent = "";
 }
