@@ -38,11 +38,12 @@ buttonsArray.forEach(function (button) {
       if (num1 === null) {
         num1 = e.target.textContent;
         display.textContent += num1;
-        console.log(num1);
+        console.log(`num1 is ${num1}`);
       } else if (num1 !== null) {
         num1 += e.target.textContent;
         display.textContent += e.target.textContent;
         console.log(num1);
+        console.log(`num1 is ${num1}`);
       }
     }
   });
@@ -52,14 +53,17 @@ buttonsArray.forEach(function (button) {
 buttonsArray.forEach(function (button) {
   button.addEventListener("click", (e) => {
     if (e.target.className === "operator") {
-      if (num1 === null) {
-        return;
-      } else if (operator !== null) {
-        return;
-      } else if (num1 !== null) {
-        operator = e.target.textContent;
-        display.textContent += operator;
-        console.log(operator);
+      if (num1 !== null) {
+        if (num2 === null) {
+          operator = e.target.textContent;
+          display.textContent += operator;
+          console.log(`operator is ${operator}`);
+        } else if (num2 !== null) {
+          operate();
+          num2 = null;
+          operator = e.target.textContent;
+          display.textContent += operator;
+        }
       }
     }
   });
@@ -72,49 +76,66 @@ buttonsArray.forEach(function (button) {
       if (num2 === null) {
         num2 = e.target.textContent;
         display.textContent += e.target.textContent;
-        console.log(num2);
+        console.log(`num2 is ${num2}`);
       } else if (num2 !== null) {
         num2 += e.target.textContent;
         display.textContent += e.target.textContent;
-        console.log(num2);
+        console.log(`num2 is ${num2}`);
       }
+    }
+  });
+});
+
+//clicking =
+buttonsArray.forEach(function (button) {
+  button.addEventListener("click", (e) => {
+    if (e.target.textContent === "=") {
+      operate();
     }
   });
 });
 
 //calculate the expression
 function operate() {
-  buttonsArray.forEach(function (button) {
-    button.addEventListener("click", (e) => {
-      if (e.target.textContent === "=") {
-        if (operator === "+") {
-          result = add(num1, num2);
-          display.textContent = result;
-          num1 = result;
-          console.log(result);
-        } else if (operator === "−") {
-          result = subtract(num1, num2);
-          display.textContent = result;
-          num1 = result;
-          console.log(result);
-        } else if (operator === "×") {
-          result = multiply(num1, num2);
-          display.textContent = result;
-          num1 = result;
-          console.log(result);
-        } else if (operator === "÷") {
-          result = divide(num1, num2);
-          display.textContent = result;
-          num1 = result;
-          console.log(result);
-        }
-      }
-    });
-  });
+  console.log("we are operating");
+  if (operator === "+") {
+    result = add(num1, num2);
+    display.textContent = result;
+    console.log("we operated");
+    num1 = result;
+    operator = null;
+    num2 = null;
+    console.log(`result is ${result}`);
+  } else if (operator === "−") {
+    result = subtract(num1, num2);
+    display.textContent = result;
+    console.log("we operated");
+    num1 = result;
+    operator = null;
+    num2 = null;
+    console.log(`result is ${result}`);
+  } else if (operator === "×") {
+    result = multiply(num1, num2);
+    display.textContent = result;
+    console.log("we operated");
+    num1 = result;
+    operator = null;
+    num2 = null;
+    console.log(`result is ${result}`);
+  } else if (operator === "÷") {
+    result = divide(num1, num2);
+    display.textContent = result;
+    console.log("we operated");
+    num1 = result;
+    operator = null;
+    num2 = null;
+    console.log(`result is ${result}`);
+  }
 }
 
-operate();
+// operate();
 
+//clicking clear
 buttonsArray.forEach(function (button) {
   button.addEventListener("click", (e) => {
     if (e.target.textContent === "clear") {
