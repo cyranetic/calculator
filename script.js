@@ -42,110 +42,100 @@ let display = document.querySelector(".display");
 display.textContent = "";
 let buttonsArray = document.querySelectorAll("button");
 
-function getNum1() {
-  buttonsArray.forEach(function (button) {
-    button.addEventListener("click", (e) => {
-      if (e.target.className === "number" && operator === null) {
-        if (num1 === null) {
-          num1 = e.target.textContent;
-          display.textContent += num1;
-          return num1;
-        } else if (num1 !== null) {
-          num1 += e.target.textContent;
-          display.textContent += e.target.textContent;
-          return num1;
-        }
+//get num1
+buttonsArray.forEach(function (button) {
+  button.addEventListener("click", (e) => {
+    if (e.target.className === "number" && operator === null) {
+      if (num1 === null) {
+        num1 = e.target.textContent;
+        display.textContent += num1;
+        console.log(num1);
+      } else if (num1 !== null) {
+        num1 += e.target.textContent;
+        display.textContent += e.target.textContent;
+        console.log(num1);
       }
-    });
+    }
   });
-}
-num1 = getNum1();
-console.log(num1);
+});
 
-function getOperator() {
-  buttonsArray.forEach(function (button) {
-    button.addEventListener("click", (e) => {
-      if (e.target.className === "operator") {
-        if (num1 === null) {
-          return;
-        } else if (operator !== null) {
-          return;
-        } else if (num1 !== null) {
-          operator = e.target.textContent;
-          display.textContent += operator;
-          return operator;
-        }
+//get operator
+buttonsArray.forEach(function (button) {
+  button.addEventListener("click", (e) => {
+    if (e.target.className === "operator") {
+      if (num1 === null) {
+        return;
+      } else if (operator !== null) {
+        return;
+      } else if (num1 !== null) {
+        operator = e.target.textContent;
+        display.textContent += operator;
+        console.log(operator);
       }
-    });
+    }
   });
-}
+});
 
-function getNum2() {
-  buttonsArray.forEach(function (button) {
-    button.addEventListener("click", (e) => {
-      if (e.target.className === "number" && operator !== null) {
-        if (num2 === null) {
-          num2 = e.target.textContent;
-          display.textContent += e.target.textContent;
-          return num2;
-        } else if (num2 !== null) {
-          num2 += e.target.textContent;
-          display.textContent += e.target.textContent;
-          return num2;
-        }
+//get num2
+buttonsArray.forEach(function (button) {
+  button.addEventListener("click", (e) => {
+    if (e.target.className === "number" && operator !== null) {
+      if (num2 === null) {
+        num2 = e.target.textContent;
+        display.textContent += e.target.textContent;
+        console.log(num2);
+      } else if (num2 !== null) {
+        num2 += e.target.textContent;
+        display.textContent += e.target.textContent;
+        console.log(num2);
       }
-    });
+    }
   });
+});
+
+//calculate the expression
+buttonsArray.forEach(function (button) {
+  button.addEventListener("click", (e) => {
+    if (e.target.textContent === "=") {
+      if (operator === "+") {
+        result = add(num1, num2);
+        display.textContent = result;
+        num1 = result;
+        console.log(result);
+      } else if (operator === "−") {
+        result = subtract(num1, num2);
+        display.textContent = result;
+        num1 = result;
+        console.log(result);
+      } else if (operator === "×") {
+        result = multiply(num1, num2);
+        display.textContent = result;
+        num1 = result;
+        console.log(result);
+      } else if (operator === "÷") {
+        result = divide(num1, num2);
+        display.textContent = result;
+        num1 = result;
+        console.log(result);
+      }
+    }
+  });
+});
+
+//math
+function add(number1, number2) {
+  return Number(number1) + Number(number2);
 }
-
-// function operate() {
-//   //calculate the expression
-//   buttonsArray.forEach(function (button) {
-//     button.addEventListener("click", (e) => {
-//       if (e.target.textContent === "=") {
-//         if (operator() === "+") {
-//           result = add(num1(), num2());
-//           display.textContent = result;
-//           num1 = result;
-//           console.log(result);
-//           return result;
-//         } else if (operator() === "−") {
-//           result = subtract(num1(), num2());
-//           display.textContent = result;
-//           num1 = result;
-//           return result;
-//         } else if (operator() === "×") {
-//           result = multiply(num1(), num2());
-//           display.textContent = result;
-//           num1 = result;
-//           return result;
-//         } else if (operator() === "÷") {
-//           result = divide(num1(), num2());
-//           display.textContent = result;
-//           num1 = result;
-//           return result;
-//         }
-//       }
-//     });
-//   });
-// }
-
-// //math
-// function add(number1, number2) {
-//   return Number(number1) + Number(number2);
-// }
-// function subtract(number1, number2) {
-//   return Number(number1) - Number(number2);
-// }
-// function multiply(number1, number2) {
-//   return Number(number1) * Number(number2);
-// }
-// function divide(number1, number2) {
-//   if (number1 === 0 || number2 === 0) {
-//     return "Nope";
-//   } else {
-//     return Number(number1) / Number(number2);
-//   }
-// }
-
-// operate();
+function subtract(number1, number2) {
+  return Number(number1) - Number(number2);
+}
+function multiply(number1, number2) {
+  return Number(number1) * Number(number2);
+}
+function divide(number1, number2) {
+  if (number1 === 0 || number2 === 0) {
+    return "Nope";
+  } else {
+    return Number(number1) / Number(number2);
+  }
+}
