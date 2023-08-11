@@ -94,33 +94,37 @@ buttonsArray.forEach(function (button) {
 });
 
 //calculate the expression
-buttonsArray.forEach(function (button) {
-  button.addEventListener("click", (e) => {
-    if (e.target.textContent === "=") {
-      if (operator === "+") {
-        result = add(num1, num2);
-        display.textContent = result;
-        num1 = result;
-        console.log(result);
-      } else if (operator === "−") {
-        result = subtract(num1, num2);
-        display.textContent = result;
-        num1 = result;
-        console.log(result);
-      } else if (operator === "×") {
-        result = multiply(num1, num2);
-        display.textContent = result;
-        num1 = result;
-        console.log(result);
-      } else if (operator === "÷") {
-        result = divide(num1, num2);
-        display.textContent = result;
-        num1 = result;
-        console.log(result);
+function operate() {
+  buttonsArray.forEach(function (button) {
+    button.addEventListener("click", (e) => {
+      if (e.target.textContent === "=") {
+        if (operator === "+") {
+          result = add(num1, num2);
+          display.textContent = result;
+          num1 = result;
+          console.log(result);
+        } else if (operator === "−") {
+          result = subtract(num1, num2);
+          display.textContent = result;
+          num1 = result;
+          console.log(result);
+        } else if (operator === "×") {
+          result = multiply(num1, num2);
+          display.textContent = result;
+          num1 = result;
+          console.log(result);
+        } else if (operator === "÷") {
+          result = divide(num1, num2);
+          display.textContent = result;
+          num1 = result;
+          console.log(result);
+        }
       }
-    }
+    });
   });
-});
+}
+
+operate();
 
 //math
 function add(number1, number2) {
