@@ -54,6 +54,36 @@ buttonsArray.forEach(function (button) {
   });
 });
 
+//insert decimal
+buttonsArray.forEach(function (button) {
+  button.addEventListener("click", (e) => {
+    if (e.target.className === "decimal-point") {
+      if (display.textContent === "") {
+        num1 = ".";
+        display.textContent = ".";
+      } else if (display.textContent === num1) {
+        if (!num1.includes(".")) {
+          num1 = num1 + ".";
+          display.textContent = num1;
+        } else if (num1 === null) {
+          num1 = ".";
+        }
+      } else if (display.textContent === num2) {
+        if (!num2.includes(".")) {
+          num2 = num2 + ".";
+          display.textContent = num2;
+        } else if (num2 === null) {
+          num2 = ".";
+        }
+      } else if (num1 && operator && num2 === null) {
+        num2 = ".";
+        display.textContent += ".";
+      }
+    }
+  });
+});
+//if there's already a decimal don't put another
+
 //get num2
 buttonsArray.forEach(function (button) {
   button.addEventListener("click", (e) => {
@@ -186,15 +216,5 @@ buttonsArray.forEach(function (button) {
         num2 = lastModifiedVar;
       }
     }
-
-    //the most recently modified variable needs to be reset
-    // if (lastModifiedVar === num1) {
-    //   num1 = null;
-    // } else if (lastModifiedVar === operator) {
-    //   operator = null;
-    // } else if (lastModifiedVar === num2) {
-    //   num2 = null;
-    // }
-    // lastModifiedVar = null;
   });
 });
