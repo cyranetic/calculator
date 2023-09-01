@@ -78,7 +78,9 @@ buttonsArray.forEach(function (button) {
   button.addEventListener("click", (e) => {
     if (e.target.className === "operator") {
       if (display.textContent.length < 17) {
+        //careful! the button is a subtract character, looks similar to negative sign but they're different characters
         if (num1 === null && e.target.textContent === "−") {
+          //careful! the character used for the actual math is a "hyphen-minus" character
           num1 = "-";
           lastModifiedVar = num1;
           display.textContent = "-";
