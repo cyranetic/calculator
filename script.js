@@ -16,27 +16,30 @@ let buttonsArray = document.querySelectorAll("button");
 buttonsArray.forEach(function (button) {
   button.addEventListener("click", (e) => {
     if (e.target.className === "decimal-point") {
-      if (display.textContent === "") {
-        num1 = ".";
-        display.textContent = ".";
-      } else if (display.textContent === num1) {
-        //if there's already a decimal don't put another
-        if (!num1.includes(".")) {
-          num1 = num1 + ".";
-          display.textContent = num1;
-        } else if (num1 === null) {
+      //stop display from overflowing
+      if (display.textContent.length < 17) {
+        if (display.textContent === "") {
           num1 = ".";
-        }
-      } else if (display.textContent.includes(num2)) {
-        if (!num2.includes(".")) {
-          num2 = num2 + ".";
-          display.textContent += ".";
-        } else if (num2 === null) {
+          display.textContent = ".";
+        } else if (display.textContent === num1) {
+          //if there's already a decimal don't put another
+          if (!num1.includes(".")) {
+            num1 = num1 + ".";
+            display.textContent = num1;
+          } else if (num1 === null) {
+            num1 = ".";
+          }
+        } else if (display.textContent.includes(num2)) {
+          if (!num2.includes(".")) {
+            num2 = num2 + ".";
+            display.textContent += ".";
+          } else if (num2 === null) {
+            num2 = ".";
+          }
+        } else if (num1 && operator && num2 === null) {
           num2 = ".";
+          display.textContent += ".";
         }
-      } else if (num1 && operator && num2 === null) {
-        num2 = ".";
-        display.textContent += ".";
       }
     }
   });
@@ -52,11 +55,13 @@ buttonsArray.forEach(function (button) {
         lastModifiedVar = display.textContent;
         console.log(`num1 is ${num1}`);
       } else if (num1 !== null) {
-        num1 += e.target.textContent;
-        display.textContent += e.target.textContent;
-        lastModifiedVar = display.textContent;
-        console.log(num1);
-        console.log(`num1 is ${num1}`);
+        if (display.textContent.length < 17) {
+          num1 += e.target.textContent;
+          display.textContent += e.target.textContent;
+          lastModifiedVar = display.textContent;
+          console.log(num1);
+          console.log(`num1 is ${num1}`);
+        }
       }
     }
   });
@@ -66,16 +71,18 @@ buttonsArray.forEach(function (button) {
 buttonsArray.forEach(function (button) {
   button.addEventListener("click", (e) => {
     if (e.target.className === "operator") {
-      if (num1 !== null) {
-        if (num2 === null) {
-          operator = e.target.textContent;
-          display.textContent += operator;
-          console.log(`operator is ${operator}`);
-        } else if (num2 !== null) {
-          operate();
-          num2 = null;
-          operator = e.target.textContent;
-          display.textContent += operator;
+      if (display.textContent.length < 17) {
+        if (num1 !== null) {
+          if (num2 === null) {
+            operator = e.target.textContent;
+            display.textContent += operator;
+            console.log(`operator is ${operator}`);
+          } else if (num2 !== null) {
+            operate();
+            num2 = null;
+            operator = e.target.textContent;
+            display.textContent += operator;
+          }
         }
       }
     }
@@ -86,16 +93,18 @@ buttonsArray.forEach(function (button) {
 buttonsArray.forEach(function (button) {
   button.addEventListener("click", (e) => {
     if (e.target.className === "number" && operator !== null) {
-      if (num2 === null) {
-        num2 = e.target.textContent;
-        display.textContent += e.target.textContent;
-        lastModifiedVar = display.textContent;
-        console.log(`num2 is ${num2}`);
-      } else if (num2 !== null) {
-        num2 += e.target.textContent;
-        display.textContent += e.target.textContent;
-        lastModifiedVar = display.textContent;
-        console.log(`num2 is ${num2}`);
+      if (display.textContent.length < 17) {
+        if (num2 === null) {
+          num2 = e.target.textContent;
+          display.textContent += e.target.textContent;
+          lastModifiedVar = display.textContent;
+          console.log(`num2 is ${num2}`);
+        } else if (num2 !== null) {
+          num2 += e.target.textContent;
+          display.textContent += e.target.textContent;
+          lastModifiedVar = display.textContent;
+          console.log(`num2 is ${num2}`);
+        }
       }
     }
   });
@@ -113,10 +122,11 @@ buttonsArray.forEach(function (button) {
 });
 
 //calculate the expression
+//round results to 5 decimal places
 function operate() {
   console.log("we are operating");
   if (operator === "+") {
-    result = add(num1, num2);
+    result = add(num1, num2).toFixed(5);
     display.textContent = result;
     console.log("we operated");
     num1 = result;
@@ -124,7 +134,7 @@ function operate() {
     num2 = null;
     console.log(`result is ${result}`);
   } else if (operator === "−") {
-    result = subtract(num1, num2);
+    result = subtract(num1, num2).toFixed(5);
     display.textContent = result;
     console.log("we operated");
     num1 = result;
@@ -132,7 +142,7 @@ function operate() {
     num2 = null;
     console.log(`result is ${result}`);
   } else if (operator === "×") {
-    result = multiply(num1, num2);
+    result = multiply(num1, num2).toFixed(5);
     display.textContent = result;
     console.log("we operated");
     num1 = result;
@@ -141,7 +151,7 @@ function operate() {
     num2 = null;
     console.log(`result is ${result}`);
   } else if (operator === "÷") {
-    result = divide(num1, num2);
+    result = divide(num1, num2).toFixed(5);
     display.textContent = result;
     console.log("we operated");
     num1 = result;
