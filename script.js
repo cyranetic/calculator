@@ -27,10 +27,10 @@ buttonsArray.forEach(function (button) {
         } else if (num1 === null) {
           num1 = ".";
         }
-      } else if (display.textContent === num2) {
+      } else if (display.textContent.includes(num2)) {
         if (!num2.includes(".")) {
           num2 = num2 + ".";
-          display.textContent = num2;
+          display.textContent += ".";
         } else if (num2 === null) {
           num2 = ".";
         }
