@@ -197,7 +197,7 @@ buttonsArray.forEach(function (button) {
         lastModifiedVar = display.textContent;
         console.log(lastModifiedVar);
         num1 = lastModifiedVar;
-      } else if (display.textContent === num2) {
+      } else if (display.textContent.includes(num2)) {
         display.textContent = display.textContent.substring(
           0,
           display.textContent.length - 1
@@ -206,6 +206,14 @@ buttonsArray.forEach(function (button) {
         lastModifiedVar = display.textContent;
         console.log(lastModifiedVar);
         num2 = lastModifiedVar;
+      } else if (
+        display.textContent[display.textContent.length - 1] === operator
+      ) {
+        display.textContent = display.textContent.substring(
+          0,
+          display.textContent.length - 1
+        );
+        operator === null;
       }
     }
   });
