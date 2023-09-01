@@ -1,18 +1,46 @@
-// //allow user to input floating point (decimal) numbers
-// //don't let user input more than one decimal in a number like 11.9.39.6
+//Add keyboard support! You might run into an issue where keys such as (/) might cause you some trouble
 
-// //Add keyboard support! You might run into an issue where keys such as (/) might cause you some trouble
-
+//math variables
 let num1 = null;
 let operator = null;
 let num2 = null;
 let result = null;
-let equalsClicked = false;
 let lastModifiedVar = null;
 
+//DOM variables
 let display = document.querySelector(".display");
 display.textContent = "";
 let buttonsArray = document.querySelectorAll("button");
+
+//allow user to input floating point (decimal) numbers
+buttonsArray.forEach(function (button) {
+  button.addEventListener("click", (e) => {
+    if (e.target.className === "decimal-point") {
+      if (display.textContent === "") {
+        num1 = ".";
+        display.textContent = ".";
+      } else if (display.textContent === num1) {
+        //if there's already a decimal don't put another
+        if (!num1.includes(".")) {
+          num1 = num1 + ".";
+          display.textContent = num1;
+        } else if (num1 === null) {
+          num1 = ".";
+        }
+      } else if (display.textContent === num2) {
+        if (!num2.includes(".")) {
+          num2 = num2 + ".";
+          display.textContent = num2;
+        } else if (num2 === null) {
+          num2 = ".";
+        }
+      } else if (num1 && operator && num2 === null) {
+        num2 = ".";
+        display.textContent += ".";
+      }
+    }
+  });
+});
 
 //get num1
 buttonsArray.forEach(function (button) {
@@ -54,36 +82,6 @@ buttonsArray.forEach(function (button) {
   });
 });
 
-//insert decimal
-buttonsArray.forEach(function (button) {
-  button.addEventListener("click", (e) => {
-    if (e.target.className === "decimal-point") {
-      if (display.textContent === "") {
-        num1 = ".";
-        display.textContent = ".";
-      } else if (display.textContent === num1) {
-        if (!num1.includes(".")) {
-          num1 = num1 + ".";
-          display.textContent = num1;
-        } else if (num1 === null) {
-          num1 = ".";
-        }
-      } else if (display.textContent === num2) {
-        if (!num2.includes(".")) {
-          num2 = num2 + ".";
-          display.textContent = num2;
-        } else if (num2 === null) {
-          num2 = ".";
-        }
-      } else if (num1 && operator && num2 === null) {
-        num2 = ".";
-        display.textContent += ".";
-      }
-    }
-  });
-});
-//if there's already a decimal don't put another
-
 //get num2
 buttonsArray.forEach(function (button) {
   button.addEventListener("click", (e) => {
@@ -103,7 +101,7 @@ buttonsArray.forEach(function (button) {
   });
 });
 
-//clicking =
+//clicking equals sign
 buttonsArray.forEach(function (button) {
   button.addEventListener("click", (e) => {
     if (e.target.textContent === "=") {
@@ -153,16 +151,7 @@ function operate() {
   }
 }
 
-//clicking clear
-buttonsArray.forEach(function (button) {
-  button.addEventListener("click", (e) => {
-    if (e.target.textContent === "clear") {
-      clear();
-    }
-  });
-});
-
-//math
+//math helpers
 function add(number1, number2) {
   return Number(number1) + Number(number2);
 }
@@ -180,17 +169,20 @@ function divide(number1, number2) {
   }
 }
 
-//clear function
-function clear() {
-  //clicking 'clear' clears the display and resets all variable values
-  num1 = null;
-  operator = null;
-  num2 = null;
-  lastModifiedVar = null;
-  display.textContent = "";
-}
+//clear
+buttonsArray.forEach(function (button) {
+  button.addEventListener("click", (e) => {
+    if (e.target.textContent === "clear") {
+      num1 = null;
+      operator = null;
+      num2 = null;
+      lastModifiedVar = null;
+      display.textContent = "";
+    }
+  });
+});
 
-//backspace function
+//backspace
 buttonsArray.forEach(function (button) {
   button.addEventListener("click", (e) => {
     //display string gets rid of last character
