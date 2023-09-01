@@ -174,7 +174,7 @@ function operate() {
   } else if (operator === "÷") {
     if (num1 === "0" || num2 === "0") {
       console.log("dividing now");
-      result = "Nope";
+      result = `Don't divide by 0`;
       display.textContent = result;
       console.log("couldnt operate");
       num1 = null;
@@ -246,9 +246,12 @@ buttonsArray.forEach(function (button) {
           display.textContent.length - 1
         );
         console.log(lastModifiedVar);
-        lastModifiedVar = display.textContent;
-        console.log(lastModifiedVar);
-        num2 = lastModifiedVar;
+        if (operator === "÷" && num2 !== 0) {
+          lastModifiedVar = num2;
+          num2 = lastModifiedVar;
+        } else if (operator === "÷" && num2 === 0) {
+          display.textContent = `Don't divide with zeros`;
+        }
       } else if (
         display.textContent[display.textContent.length - 1] === operator
       ) {
