@@ -1,21 +1,3 @@
-// //backspace function
-// function backspace() {
-//   //display string gets rid of last character
-//   display.textContent = display.textContent.substring(
-//     0,
-//     display.textContent.length - 1
-//   );
-//   //the most recently modified variable needs to be reset
-//   if (lastModifiedVar === firstNumber) {
-//     firstNumber = null;
-//   } else if (lastModifiedVar === operator) {
-//     operator = null;
-//   } else if (lastModifiedVar === secondNumber) {
-//     secondNumber = null;
-//   }
-//   lastModifiedVar = null;
-// }
-
 // //allow user to input floating point (decimal) numbers
 // //don't let user input more than one decimal in a number like 11.9.39.6
 
@@ -26,6 +8,7 @@ let operator = null;
 let num2 = null;
 let result = null;
 let equalsClicked = false;
+let lastModifiedVar = null;
 
 let display = document.querySelector(".display");
 display.textContent = "";
@@ -38,10 +21,12 @@ buttonsArray.forEach(function (button) {
       if (num1 === null) {
         num1 = e.target.textContent;
         display.textContent += num1;
+        lastModifiedVar = display.textContent;
         console.log(`num1 is ${num1}`);
       } else if (num1 !== null) {
         num1 += e.target.textContent;
         display.textContent += e.target.textContent;
+        lastModifiedVar = display.textContent;
         console.log(num1);
         console.log(`num1 is ${num1}`);
       }
@@ -76,10 +61,12 @@ buttonsArray.forEach(function (button) {
       if (num2 === null) {
         num2 = e.target.textContent;
         display.textContent += e.target.textContent;
+        lastModifiedVar = display.textContent;
         console.log(`num2 is ${num2}`);
       } else if (num2 !== null) {
         num2 += e.target.textContent;
         display.textContent += e.target.textContent;
+        lastModifiedVar = display.textContent;
         console.log(`num2 is ${num2}`);
       }
     }
@@ -91,6 +78,8 @@ buttonsArray.forEach(function (button) {
   button.addEventListener("click", (e) => {
     if (e.target.textContent === "=") {
       operate();
+      lastModifiedVar = display.textContent;
+      num1 = lastModifiedVar;
     }
   });
 });
@@ -119,6 +108,7 @@ function operate() {
     display.textContent = result;
     console.log("we operated");
     num1 = result;
+    console.log(`num1 is currently ${num1}`);
     operator = null;
     num2 = null;
     console.log(`result is ${result}`);
@@ -132,8 +122,6 @@ function operate() {
     console.log(`result is ${result}`);
   }
 }
-
-// operate();
 
 //clicking clear
 buttonsArray.forEach(function (button) {
@@ -171,3 +159,42 @@ function clear() {
   lastModifiedVar = null;
   display.textContent = "";
 }
+
+//backspace function
+buttonsArray.forEach(function (button) {
+  button.addEventListener("click", (e) => {
+    //display string gets rid of last character
+    if (e.target.textContent === "backspace") {
+      if (display.textContent === num1) {
+        console.log("this is num1");
+        display.textContent = display.textContent.substring(
+          0,
+          display.textContent.length - 1
+        );
+        console.log(lastModifiedVar);
+        lastModifiedVar = display.textContent;
+        console.log(lastModifiedVar);
+        num1 = lastModifiedVar;
+      } else if (display.textContent === num2) {
+        display.textContent = display.textContent.substring(
+          0,
+          display.textContent.length - 1
+        );
+        console.log(lastModifiedVar);
+        lastModifiedVar = display.textContent;
+        console.log(lastModifiedVar);
+        num2 = lastModifiedVar;
+      }
+    }
+
+    //the most recently modified variable needs to be reset
+    // if (lastModifiedVar === num1) {
+    //   num1 = null;
+    // } else if (lastModifiedVar === operator) {
+    //   operator = null;
+    // } else if (lastModifiedVar === num2) {
+    //   num2 = null;
+    // }
+    // lastModifiedVar = null;
+  });
+});
