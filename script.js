@@ -55,7 +55,13 @@ buttonsArray.forEach(function (button) {
         lastModifiedVar = display.textContent;
         console.log(`num1 is ${num1}`);
       } else if (num1 !== null) {
-        if (display.textContent.length < 17) {
+        //reset num1 and the display if a number is entered right after a completed operation
+        if (num1 === result) {
+          num1 = e.target.textContent;
+          display.textContent = num1;
+          lastModifiedVar = display.textContent;
+          console.log(`num1 is ${num1}`);
+        } else if (display.textContent.length < 17) {
           num1 += e.target.textContent;
           display.textContent += e.target.textContent;
           lastModifiedVar = display.textContent;
