@@ -78,17 +78,27 @@ buttonsArray.forEach(function (button) {
   button.addEventListener("click", (e) => {
     if (e.target.className === "operator") {
       if (display.textContent.length < 17) {
-        if (num1 !== null) {
-          if (num2 === null) {
-            operator = e.target.textContent;
-            display.textContent += operator;
-            console.log(`operator is ${operator}`);
-          } else if (num2 !== null) {
-            operate();
-            num2 = null;
-            operator = e.target.textContent;
-            display.textContent += operator;
-          }
+        if (num1 === null && e.target.textContent === "−") {
+          num1 = "-";
+          lastModifiedVar = num1;
+          display.textContent = "-";
+        } else if (operator === null && num1 !== null) {
+          operator = e.target.textContent;
+          display.textContent += operator;
+          console.log(`operator is ${operator}`);
+        } else if (num2 !== null) {
+          operate();
+          num2 = null;
+          operator = e.target.textContent;
+          display.textContent += operator;
+        } else if (
+          operator !== null &&
+          num2 === null &&
+          e.target.textContent === "−"
+        ) {
+          num2 = "-";
+          lastModifiedVar = num2;
+          display.textContent += "-";
         }
       }
     }
@@ -103,12 +113,12 @@ buttonsArray.forEach(function (button) {
         if (num2 === null) {
           num2 = e.target.textContent;
           display.textContent += e.target.textContent;
-          lastModifiedVar = display.textContent;
+          lastModifiedVar = num2;
           console.log(`num2 is ${num2}`);
         } else if (num2 !== null) {
           num2 += e.target.textContent;
           display.textContent += e.target.textContent;
-          lastModifiedVar = display.textContent;
+          lastModifiedVar = num2;
           console.log(`num2 is ${num2}`);
         }
       }
@@ -120,9 +130,11 @@ buttonsArray.forEach(function (button) {
 buttonsArray.forEach(function (button) {
   button.addEventListener("click", (e) => {
     if (e.target.textContent === "=") {
-      operate();
-      lastModifiedVar = display.textContent;
-      num1 = lastModifiedVar;
+      if (num2 !== null) {
+        operate();
+        lastModifiedVar = display.textContent;
+        num1 = lastModifiedVar;
+      }
     }
   });
 });
@@ -133,6 +145,7 @@ function operate() {
   console.log("we are operating");
   if (operator === "+") {
     result = add(num1, num2).toFixed(5);
+    console.log(`the result is ${result}`);
     display.textContent = result;
     console.log("we operated");
     num1 = result;
@@ -157,18 +170,34 @@ function operate() {
     num2 = null;
     console.log(`result is ${result}`);
   } else if (operator === "÷") {
-    result = divide(num1, num2).toFixed(5);
-    display.textContent = result;
-    console.log("we operated");
-    num1 = result;
-    operator = null;
-    num2 = null;
-    console.log(`result is ${result}`);
+    if (num1 === "0" || num2 === "0") {
+      console.log("dividing now");
+      result = "Nope";
+      display.textContent = result;
+      console.log("couldnt operate");
+      num1 = null;
+      operator = null;
+      num2 = null;
+      console.log("Dont divide with zeros");
+    } else {
+      result = divide(num1, num2).toFixed(5);
+      display.textContent = result;
+      console.log("we operated");
+      num1 = result;
+      operator = null;
+      num2 = null;
+      console.log(`result is ${result}`);
+    }
   }
 }
 
 //math helpers
 function add(number1, number2) {
+  console.log(`type of num1 is ${typeof Number(number1)}`);
+  console.log(`type of num2 is ${typeof Number(number2)}`);
+  console.log(
+    `the equation results in ${Number(number1)} + ${Number(number2)}`
+  );
   return Number(number1) + Number(number2);
 }
 function subtract(number1, number2) {
@@ -178,11 +207,7 @@ function multiply(number1, number2) {
   return Number(number1) * Number(number2);
 }
 function divide(number1, number2) {
-  if (number1 === 0 || number2 === 0) {
-    return "Nope";
-  } else {
-    return Number(number1) / Number(number2);
-  }
+  return Number(number1) / Number(number2);
 }
 
 //clear
