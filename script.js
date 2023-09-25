@@ -1,5 +1,7 @@
 //Add keyboard support! You might run into an issue where keys such as (/) might cause you some trouble
 
+//Change decimal places to up to 5 IF NEEDED. I.e., 4.5 should not look like 4.50000
+
 //math variables
 let num1 = null;
 let operator = null;
@@ -144,46 +146,76 @@ buttonsArray.forEach(function (button) {
 //calculate the expression
 //round results to 5 decimal places
 function operate() {
-  console.log("we are operating");
+  console.log("running operate() function");
   if (operator === "+") {
-    result = add(num1, num2).toFixed(5);
+    result = add(num1, num2);
     console.log(`the result is ${result}`);
     display.textContent = result;
+    if (
+      display.textContent.includes(".") &&
+      display.textContent.indexOf(".") > -6
+    ) {
+      console.log("rounding");
+      display.textContent = add(num1, num2).toFixed(5);
+    }
     console.log("we operated");
     num1 = result;
     operator = null;
     num2 = null;
     console.log(`result is ${result}`);
   } else if (operator === "−") {
-    result = subtract(num1, num2).toFixed(5);
+    result = subtract(num1, num2);
+    console.log(`the result is ${result}`);
     display.textContent = result;
+    if (
+      display.textContent.includes(".") &&
+      display.textContent.indexOf(".") > -6
+    ) {
+      console.log("rounding");
+      display.textContent = subtract(num1, num2).toFixed(5);
+    }
     console.log("we operated");
     num1 = result;
     operator = null;
     num2 = null;
     console.log(`result is ${result}`);
   } else if (operator === "×") {
-    result = multiply(num1, num2).toFixed(5);
+    result = multiply(num1, num2);
+    console.log(`result is ${result}`);
     display.textContent = result;
+    if (
+      display.textContent.includes(".") &&
+      display.textContent.indexOf(".") > -6
+    ) {
+      console.log("rounding");
+      display.textContent = multiply(num1, num2).toFixed(5);
+    }
     console.log("we operated");
     num1 = result;
-    console.log(`num1 is currently ${num1}`);
     operator = null;
     num2 = null;
     console.log(`result is ${result}`);
   } else if (operator === "÷") {
     if (num1 === "0" || num2 === "0") {
       console.log("dividing now");
-      result = `Don't divide by 0`;
+      result = `are you sure?`;
       display.textContent = result;
       console.log("couldnt operate");
       num1 = null;
       operator = null;
       num2 = null;
-      console.log("Dont divide with zeros");
+      console.log("don't divide by zero, please");
     } else {
-      result = divide(num1, num2).toFixed(5);
+      result = divide(num1, num2);
+      console.log(`result is ${result}`);
       display.textContent = result;
+      if (
+        display.textContent.includes(".") &&
+        display.textContent.indexOf(".") > -6
+      ) {
+        console.log("rounding");
+        display.textContent = divide(num1, num2).toFixed(5);
+      }
       console.log("we operated");
       num1 = result;
       operator = null;
