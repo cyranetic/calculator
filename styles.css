@@ -4,6 +4,10 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
+  background-image: url('./IMG_8828.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
 }
 
 .calculator {
@@ -20,7 +24,7 @@ body {
 
 .display {
   border: 2px solid black;
-  border-radius: 22px;
+  border-radius: 15px;
   width: 350px;
   height: 45px;
   margin-top: 50px;
@@ -47,10 +51,18 @@ button {
   font-size: 30px;
 }
 
+button:hover {
+  background-color: yellow;
+}
+
 .operator {
   color: blue;
   background-color: lightblue;
   font-size: 40px;
+}
+
+.operator:hover {
+  background-color: rgb(119, 203, 232);
 }
 
 .erase {
