@@ -261,7 +261,7 @@ buttonsArray.forEach(function (button) {
 buttonsArray.forEach(function (button) {
   button.addEventListener("click", (e) => {
     //display string gets rid of last character
-    if (e.target.textContent === "backspace") {
+    if (e.target.textContent === "delete") {
       if (display.textContent === num1) {
         console.log("this is num1");
         display.textContent = display.textContent.substring(
