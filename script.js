@@ -63,6 +63,11 @@ buttonsArray.forEach(function (button) {
           display.textContent = num1;
           lastModifiedVar = display.textContent;
           console.log(`num1 is ${num1}`);
+        } else if (display.textContent !== undefined) {
+          num1 = e.target.textContent;
+          display.textContent = num1;
+          lastModifiedVar = display.textContent;
+          console.log(`num1 is ${num1}`);
         } else if (display.textContent.length < 17) {
           num1 += e.target.textContent;
           display.textContent += e.target.textContent;
